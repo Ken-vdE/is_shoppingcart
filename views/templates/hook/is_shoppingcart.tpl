@@ -63,7 +63,8 @@
 
           {* Also see modal-success.tpl and cart-summary-totals.tpl *}
           {*<custom> based on https://nemops.com/prestashop-show-free-shipping *}
-          {assign var='freeshipping_price' value=Configuration::get('PS_SHIPPING_FREE_PRICE')}
+          {*{assign var='freeshipping_price' value=Configuration::get('PS_SHIPPING_FREE_PRICE')}*}
+          {assign var='freeshipping_price' value=Db::getInstance()->getValue('SELECT `delimiter2` FROM `ps_range_price` rp INNER JOIN ps_carrier c ON rp.id_carrier = c.id_carrier WHERE `delimiter1` = 0 AND `active` = 1 AND `deleted` = 0')}
           {if $freeshipping_price}
             {* Convert currency if required *}
             {assign var='freeshipping_price_converted' value={Tools::convertPrice($freeshipping_price)}}
